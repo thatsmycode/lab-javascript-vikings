@@ -67,22 +67,23 @@ class War {
     vikingAttack(){
         let ataker = this.vikingArmy[Math.floor(Math.random()*this.vikingArmy.length )];
         let defender = this.saxonArmy[Math.floor(Math.random() *this.saxonArmy.length )];
-       
-       //segurament el error esta aqui! lo de dins el condicional s'executa, encara qe estigui dins el condicional.
-        if ( defender.receiveDamage(ataker.attack()) === "A Saxon has died in combat"){
-            let result = defender.receiveDamage(ataker.attack());
-            
+      
+        
+       let result = defender.receiveDamage(ataker.attack());
+       if ( result === "A Saxon has died in combat"){
             this.saxonArmy.forEach(function(e){
+                console.log(e);
+                console.log(this.saxonArmy);
                 if(e.health <= 0 ){
                     this.saxonArmy.splice(this.saxonArmy.indexOf(e),1);
+                    console.log("this.saxonArmy");
                 }
             })
         }else{
             defender.receiveDamage(ataker.strength);
         }
         this.showStatus();
-        return result;
-        
+        return result;        
     }
     saxonAttack(){
         const randomSaxonindex = Math.floor(Math.random() *this.saxonArmy.length );
@@ -90,14 +91,12 @@ class War {
         const randomVikingIndex = Math.floor(Math.random() *this.vikingArmy.length );
         const randomViking = this.vikingArmy[randomVikingIndex];
 
-
         let result = randomViking.receiveDamage(randomSaxon.attack());
 
         if (randomViking.health <= 0){
             this.vikingArmy.splice(randomVikingIndex,1);
         }
         return result;
-
     }
     showStatus(){
         let text;
